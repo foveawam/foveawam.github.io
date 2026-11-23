@@ -10,7 +10,7 @@ From the repository root, run `node preview.mjs` and open [the local project pag
 
 ## Update the pages
 
-- Edit `dist/review.html` for the English page. The root `dist/index.html` forwards visitors to it and preserves section links.
+- Edit `dist/index.html` for the English homepage. Existing links to `review.html` forward to the root and preserve query strings and section links.
 - Run `python make_zh.py` after editing the English page. This generates `dist/review-zh.html`. Update the translation pairs in the script if the English wording changes. The checked-in pages use LF line endings.
 - `dist/review.css` and `dist/styles.css` define the layout. `dist/app.js`, `dist/review-media.js` and `dist/real-demos.js` handle the figures, BibTeX and video players.
 

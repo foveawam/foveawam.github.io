@@ -1,4 +1,4 @@
-"""Write dist/review-zh.html from dist/review.html.
+"""Write dist/review-zh.html from dist/index.html.
 
 Every English string on the page has a Chinese counterpart below. Each
 replacement must match exactly once or more, so a changed English sentence
@@ -27,6 +27,8 @@ ABSTRACT_ZH = (
 PAIRS = [
     # Document head and navigation
     ('<html lang="en">', '<html lang="zh-CN">'),
+    ('<link rel="canonical" href="https://foveawam.github.io/">',
+     '<link rel="canonical" href="https://foveawam.github.io/review-zh.html">'),
     ('content="FoveaWAM learns a precise trajectory for the manipulation target and sparse 3D flow for the surrounding scene."',
      'content="FoveaWAM 为操作目标学习精确的 SE(3) 轨迹，为周围场景学习稀疏 3D 流。"'),
     ('<title>FoveaWAM: Role-Aware 4D World–Action Modeling for Dynamic Manipulation</title>',
@@ -36,7 +38,7 @@ PAIRS = [
     ('<a href="#real-demos">Real robot</a>', '<a href="#real-demos">真机实验</a>'),
     ('<a href="#method">Method</a>', '<a href="#method">方法</a>'),
     ('<a href="#results">Results</a>\n      </nav>',
-     '<a href="#results">实验结果</a>\n        <a class="lang-switch" href="review.html" hreflang="en" lang="en">English</a>\n      </nav>'),
+     '<a href="#results">实验结果</a>\n        <a class="lang-switch" href="./" hreflang="en" lang="en">English</a>\n      </nav>'),
     ('<p class="author-note"><sup>†</sup>Corresponding authors</p>', '<p class="author-note"><sup>†</sup>通讯作者</p>'),
     ('<p>Please refer to our <!-- arXiv: replace with <a href="https://arxiv.org/abs/ID"> when the preprint is public --><span class="arxiv-pending" role="link" aria-disabled="true" title="arXiv link pending"><strong>paper</strong></span> for detailed discussions and the complete experimental results.</p>',
      '<p>详细讨论与完整实验结果请参阅我们的<!-- arXiv：预印本公开后替换为 <a href="https://arxiv.org/abs/ID"> --><span class="arxiv-pending" role="link" aria-disabled="true" title="arXiv 链接待发布"><strong>论文</strong></span>。</p>'),
@@ -197,16 +199,16 @@ PAIRS = [
 
 
 def main() -> None:
-    html = (DIST / "review.html").read_text(encoding="utf-8")
+    html = (DIST / "index.html").read_text(encoding="utf-8")
     for english, chinese in PAIRS:
         if english not in html:
-            raise SystemExit(f"Not found in review.html: {english[:80]}")
+            raise SystemExit(f"Not found in index.html: {english[:80]}")
         html = html.replace(english, chinese)
     abstract = re.compile(r'(<h2 id="abstract-title">摘要</h2>\s*<p>)(.*?)(</p>)', re.S)
     html, count = abstract.subn(lambda m: m.group(1) + ABSTRACT_ZH + m.group(3), html)
     if count != 1:
         raise SystemExit("Abstract paragraph not found")
-    (DIST / "review-zh.html").write_text(html, encoding="utf-8")
+    (DIST / "review-zh.html").write_bytes(html.encode("utf-8"))
     print("wrote review-zh.html")
 
 
