@@ -1,0 +1,306 @@
+{
+  "benchmark": [
+    {
+      "id": "grasp",
+      "title": "Harmonic grasp",
+      "category": "Grasp",
+      "group": "moving",
+      "duration": 2.63,
+      "video": "assets/benchmark/grasp.mp4",
+      "poster": "assets/benchmark/grasp.png",
+      "preview": "assets/review/previews/grasp.mp4",
+      "previewPoster": "assets/review/previews/grasp.jpg",
+      "previewStart": 1.183
+    },
+    {
+      "id": "t1_belt",
+      "title": "Conveyor grasp",
+      "category": "Grasp",
+      "group": "moving",
+      "duration": 3.33,
+      "video": "assets/benchmark/t1_belt.mp4",
+      "poster": "assets/benchmark/t1_belt.png",
+      "preview": "assets/review/previews/t1_belt.mp4",
+      "previewPoster": "assets/review/previews/t1_belt.jpg",
+      "previewStart": 1.665
+    },
+    {
+      "id": "t1_xyz",
+      "title": "Translating grasp",
+      "category": "Grasp",
+      "group": "moving",
+      "duration": 2.7,
+      "video": "assets/benchmark/t1_xyz.mp4",
+      "poster": "assets/benchmark/t1_xyz.png",
+      "preview": "assets/review/previews/t1_xyz.mp4",
+      "previewPoster": "assets/review/previews/t1_xyz.jpg",
+      "previewStart": 1.215
+    },
+    {
+      "id": "t1_so3",
+      "title": "Rotating grasp",
+      "category": "Grasp",
+      "group": "moving",
+      "duration": 2.93,
+      "video": "assets/benchmark/t1_so3.mp4",
+      "poster": "assets/benchmark/t1_so3.png",
+      "preview": "assets/review/previews/t1_so3.mp4",
+      "previewPoster": "assets/review/previews/t1_so3.jpg",
+      "previewStart": 1.319
+    },
+    {
+      "id": "t1_occ",
+      "title": "Occluded grasp",
+      "category": "Grasp",
+      "group": "moving",
+      "duration": 3.33,
+      "video": "assets/benchmark/t1_occ.mp4",
+      "poster": "assets/benchmark/t1_occ.png",
+      "preview": "assets/review/previews/t1_occ.mp4",
+      "previewPoster": "assets/review/previews/t1_occ.jpg",
+      "previewStart": 0.833
+    },
+    {
+      "id": "t2_trans",
+      "title": "Moving receptacle",
+      "category": "Place",
+      "group": "placement",
+      "duration": 4.1,
+      "video": "assets/benchmark/t2_trans.mp4",
+      "poster": "assets/benchmark/t2_trans.png",
+      "preview": "assets/review/previews/t2_trans.mp4",
+      "previewPoster": "assets/review/previews/t2_trans.jpg",
+      "previewStart": 1.845
+    },
+    {
+      "id": "t2_se3",
+      "title": "Rotating receptacle",
+      "category": "Place",
+      "group": "placement",
+      "duration": 4.9,
+      "video": "assets/benchmark/t2_se3.mp4",
+      "poster": "assets/benchmark/t2_se3.png",
+      "preview": "assets/review/previews/t2_se3.mp4",
+      "previewPoster": "assets/review/previews/t2_se3.jpg",
+      "previewStart": 2.205
+    },
+    {
+      "id": "t3_phase",
+      "title": "Wire passage",
+      "category": "Pass",
+      "group": "timing",
+      "duration": 20.2,
+      "video": "assets/benchmark/t3_phase.mp4",
+      "poster": "assets/benchmark/t3_phase.png",
+      "preview": "assets/review/previews/t3_phase.mp4",
+      "previewPoster": "assets/review/previews/t3_phase.jpg",
+      "previewStart": 7.676
+    },
+    {
+      "id": "t3_full",
+      "title": "Full wire passage",
+      "category": "Pass",
+      "group": "timing",
+      "duration": 26.0,
+      "video": "assets/benchmark/t3_full.mp4",
+      "poster": "assets/benchmark/t3_full.png",
+      "preview": "assets/review/previews/t3_full.mp4",
+      "previewPoster": "assets/review/previews/t3_full.jpg",
+      "previewStart": 9.88
+    },
+    {
+      "id": "t4_sphere",
+      "title": "Ball capture",
+      "category": "Capture",
+      "group": "dynamics",
+      "duration": 1.8,
+      "video": "assets/benchmark/t4_sphere.mp4",
+      "poster": "assets/benchmark/t4_sphere.png",
+      "preview": "assets/review/previews/t4_sphere.mp4",
+      "previewPoster": "assets/review/previews/t4_sphere.jpg",
+      "previewStart": 0.486
+    },
+    {
+      "id": "t4_sphere_tabletop",
+      "title": "Ball capture on table",
+      "category": "Capture",
+      "group": "dynamics",
+      "duration": 2.1,
+      "video": "assets/benchmark/t4_sphere_tabletop.mp4",
+      "poster": "assets/benchmark/t4_sphere_tabletop.png",
+      "preview": "assets/review/previews/t4_sphere_tabletop.mp4",
+      "previewPoster": "assets/review/previews/t4_sphere_tabletop.jpg",
+      "previewStart": 0.63
+    },
+    {
+      "id": "t4_slider",
+      "title": "Slider capture",
+      "category": "Capture",
+      "group": "dynamics",
+      "duration": 2.0,
+      "video": "assets/benchmark/t4_slider.mp4",
+      "poster": "assets/benchmark/t4_slider.png",
+      "preview": "assets/review/previews/t4_slider.mp4",
+      "previewPoster": "assets/review/previews/t4_slider.jpg",
+      "previewStart": 0.9
+    },
+    {
+      "id": "t4_can",
+      "title": "Can capture",
+      "category": "Capture",
+      "group": "dynamics",
+      "duration": 2.3,
+      "video": "assets/benchmark/t4_can.mp4",
+      "poster": "assets/benchmark/t4_can.png",
+      "preview": "assets/review/previews/t4_can.mp4",
+      "previewPoster": "assets/review/previews/t4_can.jpg",
+      "previewStart": 1.035
+    },
+    {
+      "id": "t5_replan",
+      "title": "Post-impact grasp",
+      "category": "Impact",
+      "group": "replanning",
+      "duration": 4.83,
+      "video": "assets/benchmark/t5_replan.mp4",
+      "poster": "assets/benchmark/t5_replan.png",
+      "preview": "assets/review/previews/t5_replan.mp4",
+      "previewPoster": "assets/review/previews/t5_replan.jpg",
+      "previewStart": 2.174
+    }
+  ],
+  "real": [
+    {
+      "id": "t1",
+      "label": "Conveyor",
+      "title": "Conveyor Grasp",
+      "caption": "FoveaWAM lifts the red block. In the π₀.₅ trial, the block continues along the belt.",
+      "width": 1344,
+      "height": 882,
+      "frames": 128,
+      "fps": 30,
+      "contactFrame": 59,
+      "success": {
+        "clip": 68,
+        "video": "assets/real/showcase/T1_success_068.mp4",
+        "poster": "assets/real/showcase/T1_success_068.png"
+      },
+      "failure": {
+        "clip": 70,
+        "video": "assets/real/showcase/T1_failure_070.mp4",
+        "poster": "assets/real/showcase/T1_failure_070.png"
+      },
+      "scenePoster": "assets/real/t1.png"
+    },
+    {
+      "id": "t2",
+      "label": "Moving box",
+      "title": "Moving Box Placement",
+      "caption": "The red block lands inside the moving box with FoveaWAM and behind the box with π₀.₅.",
+      "width": 1536,
+      "height": 1008,
+      "frames": 104,
+      "fps": 30,
+      "contactFrame": 55,
+      "success": {
+        "clip": 80,
+        "video": "assets/real/showcase/T2_success_080.mp4",
+        "poster": "assets/real/showcase/T2_success_080.png"
+      },
+      "failure": {
+        "clip": 89,
+        "video": "assets/real/showcase/T2_failure_089.mp4",
+        "poster": "assets/real/showcase/T2_failure_089.png"
+      },
+      "scenePoster": "assets/real/t2.png"
+    },
+    {
+      "id": "t3",
+      "label": "Turntable",
+      "title": "Turntable Grasp",
+      "caption": "FoveaWAM lifts the green block clear of the turntable. The block stays on the rotating surface in the π₀.₅ trial.",
+      "width": 1024,
+      "height": 672,
+      "frames": 144,
+      "fps": 30,
+      "contactFrame": 54,
+      "success": {
+        "clip": 126,
+        "video": "assets/real/showcase/T3_success_126.mp4",
+        "poster": "assets/real/showcase/T3_success_126.png"
+      },
+      "failure": {
+        "clip": 128,
+        "video": "assets/real/showcase/T3_failure_128.mp4",
+        "poster": "assets/real/showcase/T3_failure_128.png"
+      },
+      "scenePoster": "assets/real/t3.png"
+    },
+    {
+      "id": "t4",
+      "label": "Toy car",
+      "title": "Toy Car Grasp",
+      "caption": "FoveaWAM lifts the orange car off the table. In the π₀.₅ trial, the car rolls past the gripper.",
+      "width": 1216,
+      "height": 798,
+      "frames": 135,
+      "fps": 30,
+      "contactFrame": 42,
+      "success": {
+        "clip": 37,
+        "video": "assets/real/showcase/T4_success_037.mp4",
+        "poster": "assets/real/showcase/T4_success_037.png"
+      },
+      "failure": {
+        "clip": 36,
+        "video": "assets/real/showcase/T4_failure_036.mp4",
+        "poster": "assets/real/showcase/T4_failure_036.png"
+      },
+      "scenePoster": "assets/real/t4.png"
+    },
+    {
+      "id": "t5",
+      "label": "Tennis ball",
+      "title": "Ball Intercept",
+      "caption": "The ball rebounds on contact with the FoveaWAM gripper. In the π₀.₅ trial, it continues to the left.",
+      "width": 1632,
+      "height": 986,
+      "frames": 63,
+      "fps": 30,
+      "contactFrame": 18,
+      "success": {
+        "clip": 3,
+        "video": "assets/real/showcase/T5_success_003.mp4",
+        "poster": "assets/real/showcase/T5_success_003.png"
+      },
+      "failure": {
+        "clip": 24,
+        "video": "assets/real/showcase/T5_failure_024.mp4",
+        "poster": "assets/real/showcase/T5_failure_024.png"
+      },
+      "scenePoster": "assets/real/t5.png"
+    },
+    {
+      "id": "t6",
+      "label": "Ramp cart",
+      "title": "Ramp Cart Grasp",
+      "caption": "The cart rolls away empty after the FoveaWAM grasp. In the π₀.₅ trial, the red block stays on the cart.",
+      "width": 1536,
+      "height": 864,
+      "frames": 108,
+      "fps": 30,
+      "contactFrame": 21,
+      "success": {
+        "clip": 142,
+        "video": "assets/real/showcase/T6_success_142.mp4",
+        "poster": "assets/real/showcase/T6_success_142.png"
+      },
+      "failure": {
+        "clip": 141,
+        "video": "assets/real/showcase/T6_failure_141.mp4",
+        "poster": "assets/real/showcase/T6_failure_141.png"
+      },
+      "scenePoster": "assets/real/t6.png"
+    }
+  ]
+}

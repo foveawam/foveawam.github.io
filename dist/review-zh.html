@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FoveaWAM 为操作目标学习精确的 SE(3) 轨迹，为周围场景学习稀疏 3D 流。">
+  <meta name="author" content="Jiaqi Yin, Baoyue Zhang, Jiyuan Zhang, Wenxuan Liu, Zhaofei Yu, Yue Deng, Tiejun Huang">
+  <title>FoveaWAM：面向动态操作的角色感知 4D 世界—动作建模</title>
+  <link rel="icon" href="assets/brand/foveawam-tab.png" type="image/png" sizes="128x128">
+  <link rel="preload" href="assets/fonts/Inter.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="review.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body class="research-page">
+  <a class="skip-link" href="#top">跳到正文</a>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="brand" href="#top"><img src="assets/brand/foveawam-eye.png" alt="" width="42" height="21">FoveaWAM</a>
+      <nav aria-label="主导航">
+        <a href="#real-demos">真机实验</a>
+        <a href="#method">方法</a>
+        <a href="#benchmark">OnTimeBench</a>
+        <a href="#results">实验结果</a>
+        <a class="lang-switch" href="review.html" hreflang="en" lang="en">English</a>
+      </nav>
+    </div>
+  </header>
+  <main id="top" tabindex="-1">
+    <section class="hero page-width" aria-labelledby="paper-title">
+      <h1 id="paper-title" aria-label="FoveaWAM：面向动态操作的角色感知 4D 世界—动作建模"><span class="paper-name"><img src="assets/brand/foveawam-eye.png" alt="" width="112" height="56">FoveaWAM<span class="sr-only">：</span></span>
+        <span class="paper-subtitle">面向动态操作的角色感知<br>4D 世界—动作建模</span>
+      </h1>
+      <p class="authors">
+        <span><a href="https://arrebolblack.github.io/">Jiaqi Yin</a><sup>1,2</sup>,</span>
+        <span><a href="https://zby715.github.io/">Baoyue Zhang</a><sup>2</sup>,</span>
+        <span><a href="https://github.com/Leozhangjiyuan">Jiyuan Zhang</a><sup>3</sup>,</span>
+        <span><a href="https://lwxfight.github.io/">Wenxuan Liu</a><sup>2</sup>,</span>
+        <span><a href="https://www.ai.pku.edu.cn/info/1481/4000.htm">Zhaofei Yu</a><sup>2</sup>,</span>
+        <span><a href="http://shi.buaa.edu.cn/yuedeng/zh_CN/index.htm">Yue Deng</a><sup>1,†</sup>,</span>
+        <span><a href="https://idm.pku.edu.cn/info/1017/1040.htm">Tiejun Huang</a><sup>2,†</sup></span>
+      </p>
+      <p class="affiliations">
+        <span>
+          <sup>1</sup> <a href="https://www.bza.edu.cn/" title="北京中关村学院">
+            <img src="assets/affiliations/zhongguancun-academy.png" alt="北京中关村学院" width="382" height="100">
+          </a>
+        </span>
+        <span>
+          <sup>2</sup> <a href="https://www.pku.edu.cn/" title="北京大学">
+            <img class="pku-mark" src="assets/affiliations/peking-university.png" alt="北京大学" width="1702" height="479">
+          </a>
+        </span>
+        <span>
+          <sup>3</sup> <a href="https://www.baai.ac.cn/" title="北京智源人工智能研究院">
+            <img class="baai-mark" src="assets/affiliations/baai.png" alt="北京智源人工智能研究院" width="2873" height="883">
+          </a>
+        </span>
+      </p>
+      <p class="author-note"><sup>†</sup>通讯作者</p>
+      <nav aria-label="项目资源" class="paper-links">
+      <span aria-disabled="true" aria-label="arXiv 预印本，链接待发布" class="paper-button" role="link" title="arXiv 预印本链接待发布">
+      <img alt="" height="20" src="assets/icons/arxiv.svg" width="15"/>arXiv
+              </span>
+      <details class="resource-menu" name="project-resources">
+      <summary class="paper-button">
+      <img alt="" class="white-mark" height="16" src="assets/icons/github.svg" width="16"/>代码
+                </summary>
+      <ul aria-label="GitHub 仓库，链接待发布" class="resource-options">
+      <li>
+      <span aria-disabled="true" class="resource-entry" role="link">FoveaWAM</span>
+      </li>
+      <li>
+      <span aria-disabled="true" class="resource-entry" role="link">OnTimeBench</span>
+      </li>
+      </ul>
+      </details>
+      <details class="resource-menu" name="project-resources">
+      <summary class="paper-button">
+      <img alt="" height="17" src="assets/icons/hugging-face.svg" width="18"/>模型与数据
+                </summary>
+      <ul aria-label="Hugging Face 上的模型与数据" class="resource-options">
+      <li>
+      <a class="resource-entry" href="https://huggingface.co/JiaqiYin/FoveaWAM">FoveaWAM 模型</a>
+      </li>
+      <li>
+      <a class="resource-entry" href="https://huggingface.co/datasets/JiaqiYin/OnTimeBench">OnTimeBench 数据</a>
+      </li>
+      </ul>
+      </details>
+      <a class="paper-button" href="#bibtex"><span aria-hidden="true" class="citation-mark">“</span>BibTeX</a>
+      </nav>
+      <figure class="wide-figure" id="figure-1">
+        <button type="button" class="figure-open" data-title="图 1. 按角色分配预测精度" data-pdf="assets/paper/figure-1.pdf" aria-label="放大图 1：按角色分配预测精度">
+          <img src="assets/paper/figure-1.png" width="3650" height="1380" alt="真机场景中的目标位姿与稀疏场景流，插图为抓取过程。右图显示 FoveaWAM 成功率 82.1%，p95 出动作时间 15.1 ms。" decoding="async" fetchpriority="high">
+        </button>
+        <figcaption id="teaser-caption"><strong>TL;DR</strong> 像人眼的中央凹一样，FoveaWAM 精细预测操作目标、粗略预测周围环境，因而能在预测过时之前，对持续运动的场景做出动作。</figcaption>
+      </figure>
+    </section>
+
+    <section id="abstract" class="story-section abstract-section" aria-labelledby="abstract-title">
+      <h2 id="abstract-title">摘要</h2>
+      <p>要操作运动中的物体，策略必须预测动作执行那一刻的场景，而用于预测的每一毫秒都会把那一刻推得更远。场景级预测可能耗费较多计算，聚焦目标的预测则可能遗漏影响接触的周围物体。我们的核心洞察是，策略需要预测的内容可以按角色解耦：只有决定接触的目标位姿需要毫米级精度，而周围环境只通过它们留下的间隙和传给目标的运动起作用。我们提出 FoveaWAM，一个按角色分配精度的原生 4D 世界—动作模型：它把目标过去与未来的运动建模为度量的 SE(3) 轨迹，把周围环境建模为稀疏 3D 流，一切静态内容则交给当前帧。这种紧凑的表征使 FoveaWAM 在一块 RTX 5090 上 15.1&nbsp;ms 即可输出动作，比视频世界—动作基线快约 10×，留给场景变化的时间很短。为了在每个策略自身的延迟下对其进行评测，我们提出动态操作基准 OnTimeBench：策略计算期间，场景持续运动。FoveaWAM 在 OnTimeBench 上的成功率达到 82.1%，比最强基线高 20.8 个百分点，并在 DOMINO 和真机任务上同样领先。</p>
+    </section>
+
+    <section id="real-world" class="story-section" aria-labelledby="real-demos">
+      <h2 id="real-demos">真机实验</h2>
+      <div id="real-wall" class="real-wall" hidden></div>
+      <dialog id="real-dialog" aria-labelledby="real-dialog-title" closedby="any">
+        <div class="dialog-header">
+          <h3 id="real-dialog-title" aria-live="polite">真机试验</h3>
+          <div class="real-dialog-actions">
+            <button type="button" id="real-previous" aria-label="上一个任务" class="icon-button"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M15 18 9 12l6-6"/></svg></button>
+            <button type="button" id="real-next" aria-label="下一个任务" class="icon-button"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button>
+            <form method="dialog"><button type="submit" aria-label="关闭对比" class="icon-button" autofocus><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg></button></form>
+          </div>
+        </div>
+        <div id="real-panel">
+          <div class="real-pair">
+            <figure>
+              <figcaption><span class="policy">FoveaWAM</span><span class="outcome success">成功</span></figcaption>
+              <video muted playsinline preload="none"></video>
+            </figure>
+            <figure>
+              <figcaption><span class="policy">π<sub>0.5</sub></span><span class="outcome failure">失败</span></figcaption>
+              <video muted playsinline preload="none"></video>
+            </figure>
+          </div>
+          <div class="real-controls" role="group" aria-label="两段视频的播放控制">
+            <button type="button" class="real-play" aria-label="同时播放两段视频"></button>
+            <input type="range" min="0" step="1" value="0" aria-label="逐帧定位两段视频">
+          </div>
+        </div>
+        <p id="real-playback-status" role="status" hidden></p>
+      </dialog>
+      <!-- 无 JavaScript 时的备用链接。成功率取自论文表 4。 -->
+      <ul id="real-fallback" class="real-fallback">
+        <li data-task="t1" data-fovea="70" data-pi="45">传送带抓取：<a href="assets/real/showcase/T1_success_068.mp4">FoveaWAM 成功</a> · <a href="assets/real/showcase/T1_failure_070.mp4">π<sub>0.5</sub> 失败</a></li>
+        <li data-task="t2" data-fovea="80" data-pi="75">移动盒放置：<a href="assets/real/showcase/T2_success_080.mp4">FoveaWAM 成功</a> · <a href="assets/real/showcase/T2_failure_089.mp4">π<sub>0.5</sub> 失败</a></li>
+        <li data-task="t3" data-fovea="60" data-pi="30">转盘抓取：<a href="assets/real/showcase/T3_success_126.mp4">FoveaWAM 成功</a> · <a href="assets/real/showcase/T3_failure_128.mp4">π<sub>0.5</sub> 失败</a></li>
+        <li data-task="t4" data-fovea="35" data-pi="20">玩具车抓取：<a href="assets/real/showcase/T4_success_037.mp4">FoveaWAM 成功</a> · <a href="assets/real/showcase/T4_failure_036.mp4">π<sub>0.5</sub> 失败</a></li>
+        <li data-task="t5" data-fovea="35" data-pi="15">网球拦截：<a href="assets/real/showcase/T5_success_003.mp4">FoveaWAM 成功</a> · <a href="assets/real/showcase/T5_failure_024.mp4">π<sub>0.5</sub> 失败</a></li>
+        <li data-task="t6" data-fovea="10" data-pi="0">斜坡小车抓取：<a href="assets/real/showcase/T6_success_142.mp4">FoveaWAM 成功</a> · <a href="assets/real/showcase/T6_failure_141.mp4">π<sub>0.5</sub> 失败</a></li>
+      </ul>
+      <p id="real-media-status" role="status" hidden></p>
+    </section>
+
+    <section id="method" class="story-section" aria-labelledby="method-title">
+      <h2 id="method-title">方法</h2>
+      <div class="method-overview">
+        <div class="method-text">
+          <p>只有目标位姿需要毫米级精度。FoveaWAM 按角色表示场景的各个部分：</p>
+          <dl class="roles">
+            <div class="role-target"><dt>目标</dt><dd>度量的 SE(3) 轨迹：读取一小段位姿历史，并向前预测 400&nbsp;ms。</dd></div>
+            <div class="role-context"><dt>周围环境</dt><dd>粗粒度的稀疏 3D 流，足以刻画它们留下的间隙和传给目标的运动。</dd></div>
+            <div class="role-static"><dt>静态场景</dt><dd>直接取自当前 RGB-D 帧。</dd></div>
+          </dl>
+        </div>
+        <figure id="figure-2">
+          <button type="button" class="figure-open" data-title="图 2. 预测精度用在哪里" data-pdf="assets/paper/figure-2.pdf" aria-label="放大图 2：预测运动场景的三种方式">
+            <img src="assets/paper/figure-2.png" width="2700" height="1824" alt="同一次抓取在三种预测方式下的对比：全场景预测中目标位姿是隐式的；聚焦目标的预测只跟踪物体；FoveaWAM 预测目标位姿和周围物体的运动。" loading="lazy" decoding="async">
+          </button>
+        </figure>
+      </div>
+      <figure class="wide-figure architecture" id="figure-3">
+        <button type="button" class="figure-open" data-title="图 3. FoveaWAM 架构" data-pdf="assets/paper/figure-3.pdf" aria-label="放大图 3：FoveaWAM 架构">
+          <img src="assets/paper/figure-3.png" width="4125" height="2450" alt="RGB-D 与位姿历史进入世界流；训练时由两个解码器分别预测场景流与目标位姿。注意力掩码与推理路径展示动作流如何复用缓存的键和值。" loading="lazy" decoding="async">
+        </button>
+      </figure>
+    </section>
+
+    <section id="benchmark" class="story-section" aria-labelledby="benchmark-title">
+      <h2 id="benchmark-title">OnTimeBench</h2>
+      <p class="lead">现有评测器在策略计算时暂停世界。OnTimeBench 中场景持续运动，每个策略都在自己实测的延迟下评测。</p>
+      <div class="protocol">
+        <figure id="figure-4a">
+          <button type="button" class="figure-open" data-title="图 4. OnTimeBench" data-original="assets/paper/figure-4.png" data-pdf="assets/paper/figure-4.pdf" aria-label="放大图 4：OnTimeBench 评测协议与任务">
+            <img src="assets/paper/figure-4a.png" width="1450" height="880" alt="两个基准中同样 200 ms 的延迟：DOMINO 中小球停在观测到的位置，OnTimeBench 中小球滚动了 18 cm。" loading="lazy" decoding="async">
+          </button>
+          <figcaption>在 200&nbsp;ms 的推理期间，滚动的小球前进了 18&nbsp;cm。</figcaption>
+        </figure>
+        <figure id="figure-5">
+          <button type="button" class="figure-open" data-title="图 5. 原生延迟下的执行" data-pdf="assets/paper/figure-5.pdf" aria-label="放大图 5：动作执行时间线">
+            <img src="assets/paper/figure-5.png" width="2500" height="866" alt="一次观测触发策略查询；上一个动作块持续执行到下一个控制边界，再由新动作块接管。" loading="lazy" decoding="async">
+          </button>
+          <figcaption>所有策略共用一个控制时钟。新动作块在下一个控制边界接管，执行时刻已过的指令会被跳过。</figcaption>
+        </figure>
+      </div>
+
+      <section class="sim-demos" id="task-demos" aria-labelledby="simulation-title">
+        <h3 id="simulation-title">五个任务族，共 14 个任务</h3>
+        <div id="sim-track" class="task-wall" hidden></div>
+        <template id="sim-example">
+          <figure class="task-clip">
+            <button class="sim-shot" type="button" aria-haspopup="dialog" aria-controls="sim-dialog">
+              <video muted playsinline loop preload="none" width="640" height="400" aria-hidden="true"></video>
+            </button>
+            <figcaption></figcaption>
+          </figure>
+        </template>
+        <dialog id="sim-dialog" aria-labelledby="sim-dialog-title" closedby="any">
+          <div class="dialog-header">
+            <h3 id="sim-dialog-title">OnTimeBench 任务</h3>
+            <a id="sim-original" target="_blank" rel="noopener">打开 MP4</a>
+            <form method="dialog"><button type="submit" aria-label="关闭仿真视频" class="icon-button" autofocus><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg></button></form>
+          </div>
+          <video controls muted playsinline loop preload="none" width="1280" height="960"></video>
+        </dialog>
+      </section>
+      <p id="media-error" role="alert" hidden></p>
+    </section>
+
+    <section id="results" class="story-section" aria-labelledby="results-title">
+      <h2 id="results-title">实验结果</h2>
+      <p class="lead">无论是原生延迟、附加 150&nbsp;ms，还是暂停世界，FoveaWAM 的成功率都最高。</p>
+      <figure class="data-table main-table" id="table-1">
+        <table>
+          <caption class="sr-only">表 1. OnTimeBench 上 1,400 个留出场景的成功率，以及在一块 RTX 5090 上的 p95 出动作时间。</caption>
+          <thead>
+            <tr><th scope="col" rowspan="2">方法</th><th scope="colgroup" colspan="3">成功率 (%) ↑</th><th scope="col" rowspan="2">p95 出动作<br>时间 (ms) ↓</th></tr>
+            <tr><th scope="col">原生</th><th scope="col">+150&nbsp;ms</th><th scope="col">暂停</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">ACT</th><td>41.6</td><td>24.6</td><td>40.6</td><td class="best">5.8</td></tr>
+            <tr><th scope="row">Diffusion Policy</th><td>31.9</td><td>16.1</td><td>32.0</td><td>68.9</td></tr>
+            <tr><th scope="row">π<sub>0.5</sub></th><td>54.4</td><td>28.1</td><td>66.6</td><td>59.6</td></tr>
+            <tr><th scope="row">π<sub>0.5</sub> + SE(3)</th><td>58.7</td><td>28.0</td><td class="second">76.0</td><td>61.2</td></tr>
+          </tbody>
+          <tbody>
+            <tr><th scope="row">DynamicVLA</th><td>51.1</td><td>23.5</td><td>54.9</td><td>97.3</td></tr>
+            <tr><th scope="row">PUMA</th><td class="second">61.4</td><td class="second">31.1</td><td>53.1</td><td>60.6</td></tr>
+          </tbody>
+          <tbody>
+            <tr><th scope="row">OpenWAM-α</th><td>46.1</td><td>24.8</td><td>58.7</td><td>151.7</td></tr>
+            <tr><th scope="row">OpenWAM-α (off)</th><td>15.8</td><td>10.4</td><td>58.4</td><td>466.3</td></tr>
+          </tbody>
+          <tbody>
+            <tr><th scope="row">DynamicWAM</th><td>41.1</td><td>20.6</td><td>49.6</td><td>149.6</td></tr>
+            <tr><th scope="row">DynamicWAM + SE(3)</th><td>41.7</td><td>24.9</td><td>64.0</td><td>153.3</td></tr>
+          </tbody>
+          <tbody class="ours-row">
+            <tr><th scope="row">FoveaWAM（本文）</th><td class="best">82.1</td><td class="best">34.1</td><td class="best">90.3</td><td class="second">15.1</td></tr>
+          </tbody>
+        </table>
+        <figcaption>1,400 个留出测试场景，每个任务 100 个。+SE(3)：基线额外读取我们的目标位姿历史。off：关闭缓存与编译的 OpenWAM-α。<b>粗体</b>为最佳，<u>下划线</u>为次佳。</figcaption>
+      </figure>
+
+      <div class="latency-plots" id="figure-6">
+        <figure id="figure-6ab">
+          <button type="button" class="figure-open" data-title="图 6a–b. 附加延迟下的成功率" data-pdf="assets/paper/figure-6.pdf" data-full-png="assets/paper/figure-6.png" aria-label="放大图 6a–b：附加延迟下的成功率">
+            <img src="assets/paper/figure-6ab.png" width="2200" height="1683" alt="附加 0、50、100、150 ms 延迟时的成功率。左图比较各策略，右图比较 π₀.₅ 与 DynamicWAM 有无 SE(3) 历史。误差线为 95% 置信区间。" loading="lazy" decoding="async">
+          </button>
+          <figcaption>FoveaWAM 在每一档附加延迟下都领先。对 π<sub>0.5</sub> 而言，同样的位姿历史在 +50 与 +100&nbsp;ms 时反而有害：它描述的是采集时刻的目标，到执行时已经过时。</figcaption>
+        </figure>
+        <figure id="figure-6c">
+          <button type="button" class="figure-open" data-title="图 6c. 暂停与原生设置下的排名" data-pdf="assets/paper/figure-6.pdf" data-full-png="assets/paper/figure-6.png" aria-label="放大图 6c：暂停与原生设置下的排名">
+            <img src="assets/paper/figure-6c.png" width="2200" height="1365" alt="11 种配置在暂停与原生设置下的成功率、p95 出动作时间与排名变化。FoveaWAM 在两种设置下都排第一。" loading="lazy" decoding="async">
+          </button>
+          <figcaption>暂停世界掩盖了延迟的代价，11 个方法中有 9 个排名改变。两种设置下 FoveaWAM 都排第一。</figcaption>
+        </figure>
+      </div>
+
+      <figure class="data-table ablation-table" id="table-3">
+        <h3 id="ablations">消融实验</h3>
+        <p>去掉目标位姿历史会损失 19.6 个百分点。去掉 SE(3) 轨迹或场景流时，受影响最大的是旋转敏感任务。</p>
+        <table class="delta-table">
+          <caption class="sr-only">表 3. OnTimeBench 上的消融实验。FoveaWAM 为成功率（%），各变体为变化量（百分点）。</caption>
+          <thead>
+            <tr><th scope="col" rowspan="2"></th><th scope="colgroup" colspan="3">全部任务</th><th scope="colgroup" colspan="2">任务组（原生）</th></tr>
+            <tr><th scope="col">暂停</th><th scope="col">原生</th><th scope="col">+150</th><th scope="col"><abbr title="旋转敏感任务">旋转</abbr></th><th scope="col"><abbr title="环境活跃任务">环境</abbr></th></tr>
+          </thead>
+          <tbody class="ours-row">
+            <tr><th scope="row">FoveaWAM</th><td>90.3</td><td>82.1</td><td>34.1</td><td>80.4</td><td>82.7</td></tr>
+          </tbody>
+          <tbody>
+            <tr><th scope="row">无目标历史</th><td class="neg">−19.5</td><td class="neg">−19.6</td><td>+0.2</td><td class="neg">−24.0</td><td class="neg">−2.3</td></tr>
+            <tr><th scope="row">统一粗粒度流</th><td>+4.4</td><td class="neg">−4.5</td><td class="neg">−0.5</td><td class="neg">−8.6</td><td class="neg">−4.6</td></tr>
+            <tr><th scope="row">统一精细流</th><td>+1.3</td><td>+0.8</td><td class="neg">−0.9</td><td class="neg">−3.4</td><td class="neg">−2.6</td></tr>
+            <tr><th scope="row">无场景流</th><td>+3.1</td><td class="neg">−4.2</td><td class="neg">−1.4</td><td class="neg">−11.7</td><td class="neg">−3.9</td></tr>
+            <tr><th scope="row">无未来监督</th><td>+0.2</td><td class="neg">−4.3</td><td class="neg">−3.4</td><td class="neg">−12.6</td><td class="neg">−2.1</td></tr>
+            <tr><th scope="row">无外观辅助损失</th><td class="neg">−3.8</td><td class="neg">−2.6</td><td class="neg">−1.9</td><td class="neg">−11.6</td><td>+0.1</td></tr>
+          </tbody>
+        </table>
+      </figure>
+      <div class="secondary-results">
+        <figure class="data-table" id="table-2">
+          <h3 id="domino">DOMINO</h3>
+          <p>DOMINO 在推理期间暂停物理仿真，低延迟不带来优势。在它的 24 个 Franka 任务上，FoveaWAM 依然领先。</p>
+          <table>
+            <caption class="sr-only">表 2. DOMINO 上的成功率（%）与操作得分。</caption>
+            <thead>
+              <tr><th scope="col" rowspan="2">方法</th><th scope="colgroup" colspan="3">成功率 (%)</th><th scope="col" rowspan="2"><abbr title="操作得分">MS</abbr></th></tr>
+              <tr><th scope="col">拦截</th><th scope="col">跟踪</th><th scope="col">全部</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">π<sub>0.5</sub></th><td>23.8</td><td>8.1</td><td>13.3</td><td>27.8</td></tr>
+              <tr><th scope="row">DynamicWAM</th><td>16.8</td><td class="second">31.9</td><td class="second">26.9</td><td class="second">41.4</td></tr>
+              <tr><th scope="row">PUMA</th><td class="best">36.3</td><td>12.2</td><td>20.2</td><td>35.4</td></tr>
+            </tbody>
+            <tbody class="ours-row">
+              <tr><th scope="row">FoveaWAM（本文）</th><td class="second">29.4</td><td class="best">55.5</td><td class="best">46.8</td><td class="best">62.0</td></tr>
+            </tbody>
+          </table>
+        </figure>
+        <figure class="data-table real-table" id="table-4">
+          <h3 id="real-results">真机实验</h3>
+          <p>FoveaWAM 在全部六个任务上领先。</p>
+          <table>
+            <caption class="sr-only">表 4. 真机成功率（%），每个任务 20 次试验。</caption>
+            <thead>
+              <tr><th scope="col" rowspan="2">方法</th><th scope="colgroup" colspan="7">成功率 (%)，每个任务 20 次试验</th></tr>
+              <tr><th scope="col">传送带</th><th scope="col">移动盒</th><th scope="col">转盘</th><th scope="col">玩具车</th><th scope="col">网球</th><th scope="col">斜坡小车</th><th scope="col">总体</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">ACT</th><td>0</td><td>0</td><td>0</td><td>0</td><td>10</td><td>0</td><td>1.7</td></tr>
+              <tr><th scope="row">π<sub>0.5</sub></th><td>45</td><td>75</td><td>30</td><td>20</td><td>15</td><td>0</td><td>30.8</td></tr>
+            </tbody>
+            <tbody class="ours-row">
+              <tr><th scope="row">FoveaWAM（本文）</th><td class="best">70</td><td class="best">80</td><td class="best">60</td><td class="best">35</td><td class="best">35</td><td class="best">10</td><td class="best">48.3</td></tr>
+            </tbody>
+          </table>
+        </figure>
+      </div>
+    </section>
+
+    <section id="more-details" class="story-section more-details" aria-labelledby="details-title">
+      <h2 id="details-title">更多细节</h2>
+      <p>详细讨论与完整实验结果请参阅我们的<!-- arXiv：预印本公开后替换为 <a href="https://arxiv.org/abs/ID"> --><span class="arxiv-pending" role="link" aria-disabled="true" title="arXiv 链接待发布"><strong>论文</strong></span>。</p>
+    </section>
+
+    <section id="bibtex" class="story-section citation-section" aria-labelledby="bibtex-title">
+      <div class="bib-heading">
+        <h2 id="bibtex-title">BibTeX</h2>
+        <button type="button" id="copy-bibtex" hidden><span class="copy-symbol" aria-hidden="true"></span><span class="copy-label">复制</span></button>
+      </div>
+      <div class="bibtex-box">
+        <pre id="bibtex-entry"><code>@unpublished{foveawam,
+  title  = {{FoveaWAM}: Role-Aware {4D} World--Action Modeling for Dynamic Manipulation},
+  author = {Jiaqi Yin and Baoyue Zhang and Jiyuan Zhang and Wenxuan Liu and
+            Zhaofei Yu and Yue Deng and Tiejun Huang},
+  note   = {Manuscript}
+}</code></pre>
+        <p class="sr-only" role="status" id="citation-status"></p>
+      </div>
+    </section>
+  </main>
+  <dialog aria-labelledby="figure-dialog-title" id="figure-dialog">
+    <div class="dialog-header">
+      <h2 id="figure-dialog-title"></h2>
+      <div class="figure-actions">
+        <button type="button" id="figure-size" aria-controls="figure-canvas">原始尺寸</button>
+        <a id="original-image" rel="noopener" target="_blank">原图 PNG</a>
+        <a id="figure-pdf" download hidden>下载图片 PDF</a>
+        <button type="button" aria-label="关闭放大视图" id="close-figure" autofocus>关闭</button>
+      </div>
+    </div>
+    <div class="dialog-viewport" id="figure-canvas" role="region" aria-label="放大的图片" tabindex="0">
+      <img alt="" id="dialog-image">
+    </div>
+  </dialog>
+</body>
+</html>
