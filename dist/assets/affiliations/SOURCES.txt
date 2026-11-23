@@ -1,0 +1,20 @@
+FoveaWAM affiliation marks
+
+1. Beijing Zhongguancun Academy
+zhongguancun-academy.png is the bilingual wordmark from the academy's masthead.
+https://www.bza.edu.cn/
+https://www.bza.edu.cn/adminapi/public/default/logo.png
+
+2. Peking University
+peking-university.png is the bilingual horizontal mark from the university's English masthead.
+https://english.pku.edu.cn/
+https://english.pku.edu.cn/Uploads/Bden/Picture/2020/11/25/s5fbdbf048bc00.png
+The Office of Visual Identity Management also distributes the horizontal composition.
+https://vim.pku.edu.cn/xzzq/
+https://vim.pku.edu.cn/docs/20240527144451726806.zip
+
+3. Beijing Academy of Artificial Intelligence
+baai.png is the dark institutional mark from the 2026 BAAI Conference masthead.
+Only transparent outer margins were trimmed for alignment on the project page.
+https://2026.baai.ac.cn/
+https://2023-assets.baai.ac.cn/2026assets-ac/assets/images/baai-black.png
