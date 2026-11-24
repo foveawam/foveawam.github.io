@@ -51,7 +51,7 @@ PAIRS = [
     ('aria-label="Project resources"', 'aria-label="项目资源"'),
     ('aria-label="arXiv preprint, link pending"', 'aria-label="arXiv 预印本，链接待发布"'),
     ('title="arXiv preprint link pending"', 'title="arXiv 预印本链接待发布"'),
-    ('aria-label="GitHub repositories, links pending"', 'aria-label="GitHub 仓库，链接待发布"'),
+    ('aria-label="GitHub repositories"', 'aria-label="GitHub 仓库"'),
     ('aria-label="Model and data on Hugging Face"', 'aria-label="Hugging Face 上的模型与数据"'),
     ('>Model &amp; Data\n', '>模型与数据\n'),
     ('>FoveaWAM Model<', '>FoveaWAM 模型<'),
