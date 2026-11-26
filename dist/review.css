@@ -224,7 +224,6 @@ abbr[title] { text-decoration: none; }
 
 .more-details p { margin: 0 auto; max-width: 46rem; text-align: center; }
 .more-details a strong { font-weight: 700; }
-.more-details .arxiv-pending { color: var(--blue); }
 .research-page .author-note { margin: .35rem 0 0; color: var(--caption); font-size: .9rem; }
 .author-note sup { margin-right: .1em; }
 
